@@ -1,6 +1,7 @@
 package com.dikiytechies.enhancedpearls;
 
 import com.dikiytechies.enhancedpearls.init.ItemsInit;
+import com.dikiytechies.enhancedpearls.network.ModPackets;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,8 +21,11 @@ public class EnhancedPearls
 
     public EnhancedPearls() {
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
         vanillaRegistries(modEventBus);
+        modEventBus.addListener(this::preInit);
+    }
+    private void preInit(FMLCommonSetupEvent event) {
+        ModPackets.init();
     }
     private void vanillaRegistries(IEventBus eventBus) {
         ItemsInit.ITEMS.register(eventBus);

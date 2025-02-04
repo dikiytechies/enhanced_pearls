@@ -1,6 +1,6 @@
 package com.dikiytechies.enhancedpearls.item;
 
-import com.dikiytechies.enhancedpearls.util.ClientUtil;
+import com.dikiytechies.enhancedpearls.client.ClientUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,9 @@ public class CrackedPearl extends Item {
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
-        ClientUtil.openTargetSelection(player, itemStack);
+        if (world.isClientSide()) {
+            ClientUtil.openTargetSelection(player, itemStack);
+        }
         return ActionResult.success(itemStack);
     }
 }
