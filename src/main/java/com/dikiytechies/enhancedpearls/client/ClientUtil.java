@@ -15,9 +15,8 @@ public class ClientUtil {
         Minecraft.getInstance().setScreen(new TargetSelectionScreen(player, itemStack));
     }
     //https://github.com/StandoByte/Ripples-of-the-Past/blob/1.16.5/src/main/java/com/github/standobyte/jojo/client/ClientUtil.java #369
-    public static void renderPlayerFace(MatrixStack matrixStack, int x, int y, AbstractClientPlayerEntity player) {
+    public static void renderPlayerFace(MatrixStack matrixStack, int x, int y, ResourceLocation playerFace) {
         Minecraft mc = Minecraft.getInstance();
-        ResourceLocation playerFace = player.getSkinTextureLocation();
         mc.getTextureManager().bind(playerFace);
 
         AbstractGui.blit(matrixStack, x, y, 16, 16, 16, 16, 128, 128);

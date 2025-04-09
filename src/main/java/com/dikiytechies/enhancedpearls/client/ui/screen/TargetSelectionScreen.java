@@ -51,7 +51,7 @@ public class TargetSelectionScreen extends Screen {
         }*/
         ClientPlayNetHandler clientPlayNetHandler = this.minecraft.player.connection;
         List<NetworkPlayerInfo> playerList = new ArrayList<>(this.minecraft.player.connection.getOnlinePlayers());
-        //playerList.remove(clientPlayNetHandler.getPlayerInfo(player.getUUID())); todo uncomment
+        playerList.remove(clientPlayNetHandler.getPlayerInfo(player.getUUID()));
         initGrid(playerList);
     }
     private void initGrid(List<NetworkPlayerInfo> players) {
@@ -70,8 +70,8 @@ public class TargetSelectionScreen extends Screen {
                 int finalJ = j;
                 this.addButton(new TeleportButton(xMin + i * (gridScale + gridSpace), yMin + j * (gridScale + gridSpace), gridScale, gridScale,
                         player,
-                        null, //todo target
-                        (button_teleport) -> teleport(finalI, finalJ, player, players),
+                        players.get(finalJ * 9 + finalI).getSkinLocation(),
+                        (button_teleport) -> teleport(finalI, finalJ, players),
                         (Button button, MatrixStack matrixStack, int mouseX, int mouseY) -> {
                     if (button.active) {
                         this.renderTooltip(matrixStack,
@@ -80,7 +80,7 @@ public class TargetSelectionScreen extends Screen {
             }
         }
     }
-    private void teleport(int i, int j, PlayerEntity player, List<NetworkPlayerInfo> players) {
+    private void teleport(int i, int j, List<NetworkPlayerInfo> players) {
         /*ModPackets.sendToServer(new ClTeleportPacket(player.getId(), player.level.getServer().getPlayerList().getPlayer(players.get(j * 9 + i).getProfile().getId()).getId()));
         if (!player.isCreative()) itemStack.shrink(1);
         this.onClose();*/
@@ -91,7 +91,7 @@ public class TargetSelectionScreen extends Screen {
         ModPackets.sendToServer(new ClTeleportPacket(players.get(j * 9 + i).getProfile().getId()));
         this.onClose();
     }
-    //TODO tooltip, button texture
+
     @Override
     public boolean isPauseScreen() { return false; }
 }
