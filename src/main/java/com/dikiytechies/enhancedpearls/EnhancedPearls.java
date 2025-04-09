@@ -1,5 +1,6 @@
 package com.dikiytechies.enhancedpearls;
 
+import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import com.dikiytechies.enhancedpearls.init.ItemsInit;
 import com.dikiytechies.enhancedpearls.network.ModPackets;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -24,6 +25,7 @@ public class EnhancedPearls
         ModPackets.init();
     }
     private void vanillaRegistries(IEventBus eventBus) {
+        EnchantmentsInit.ENCHANTMENTS.register(eventBus);
         ItemsInit.ITEMS.register(eventBus);
     }
 }

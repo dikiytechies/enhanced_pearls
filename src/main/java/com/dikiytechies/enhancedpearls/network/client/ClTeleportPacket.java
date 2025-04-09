@@ -1,7 +1,5 @@
 package com.dikiytechies.enhancedpearls.network.client;
 
-import com.dikiytechies.enhancedpearls.EnhancedPearls;
-import com.dikiytechies.enhancedpearls.init.ItemsInit;
 import com.dikiytechies.enhancedpearls.item.EnhancedPearl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,20 +8,20 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-import java.util.Random;
 import java.util.UUID;
 import java.util.function.Supplier;
 
 public class ClTeleportPacket {
-    private final UUID requestedEntityUUID;
+    private final UUID requestedPlayerUUID;
     public ClTeleportPacket(UUID requestedEntityUUID) {
-        this.requestedEntityUUID = requestedEntityUUID;
+        this.requestedPlayerUUID = requestedEntityUUID;
     }
 
     public static void encode(ClTeleportPacket msg, PacketBuffer buf) {
-        buf.writeUUID(msg.requestedEntityUUID);
+        buf.writeUUID(msg.requestedPlayerUUID);
     }
 
     public static ClTeleportPacket decode(PacketBuffer buf) {
@@ -35,13 +33,19 @@ public class ClTeleportPacket {
         ctx.get().enqueueWork(() -> {
             ServerPlayerEntity player = ctx.get().getSender();
             if (player != null) {
-                PlayerEntity requestedPlayer = (PlayerEntity) Minecraft.getInstance().level.getEntity(player.level.getServer().getPlayerList().getPlayer(msg.requestedEntityUUID).getId());
+                PlayerEntity requestedPlayer = null;
+                ServerWorld requestedPlayerWorld = null;
+                for (ServerWorld world : player.level.getServer().getAllLevels()) {
+                    if (world.getEntity(world.getServer().getPlayerList().getPlayer(msg.requestedPlayerUUID).getId()) != null) {
+                        requestedPlayer =  (PlayerEntity) world.getEntity(world.getServer().getPlayerList().getPlayer(msg.requestedPlayerUUID).getId());
+                        requestedPlayerWorld = world;
+                    }
+                }
                 if (requestedPlayer != null) {
                     player.level.playSound(player, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
-                    player.moveTo(requestedPlayer.position());
+                    player.teleportTo(requestedPlayerWorld, requestedPlayer.position().x, requestedPlayer.position().y, requestedPlayer.position().z, requestedPlayer.yRot, requestedPlayer.xRot);
                     player.level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0f, 1.0f);
                     if (!player.isCreative()) {
-                        Random random = new Random();
                         if (player.getMainHandItem().getItem() instanceof EnhancedPearl) {
                             if (player.getMainHandItem().isDamageableItem()) {
                                 player.getMainHandItem().hurtAndBreak(1, player, stack -> stack.broadcastBreakEvent(Hand.MAIN_HAND));

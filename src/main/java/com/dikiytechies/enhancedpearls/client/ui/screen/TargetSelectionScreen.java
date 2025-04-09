@@ -1,9 +1,12 @@
 package com.dikiytechies.enhancedpearls.client.ui.screen;
 
+import com.dikiytechies.enhancedpearls.client.ClientUtil;
 import com.dikiytechies.enhancedpearls.client.ui.widget.TeleportButton;
+import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import com.dikiytechies.enhancedpearls.network.ModPackets;
 import com.dikiytechies.enhancedpearls.network.client.ClTeleportPacket;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
@@ -47,6 +50,7 @@ public class TargetSelectionScreen extends Screen {
         ClientPlayNetHandler clientPlayNetHandler = this.minecraft.player.connection;
         List<NetworkPlayerInfo> playerList = new ArrayList<>(this.minecraft.player.connection.getOnlinePlayers());
         playerList.remove(clientPlayNetHandler.getPlayerInfo(player.getUUID()));
+        //todo remove players from another dimension
         initGrid(playerList);
     }
     private void initGrid(List<NetworkPlayerInfo> players) {
