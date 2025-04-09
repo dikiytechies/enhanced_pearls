@@ -3,7 +3,6 @@ package com.dikiytechies.enhancedpearls.client;
 import com.dikiytechies.enhancedpearls.client.ui.screen.TargetSelectionScreen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerModelPart;
