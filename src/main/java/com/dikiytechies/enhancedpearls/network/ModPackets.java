@@ -1,7 +1,9 @@
 package com.dikiytechies.enhancedpearls.network;
 
 import com.dikiytechies.enhancedpearls.EnhancedPearls;
+import com.dikiytechies.enhancedpearls.network.client.ClDimensionCheckPacket;
 import com.dikiytechies.enhancedpearls.network.client.ClTeleportPacket;
+import com.dikiytechies.enhancedpearls.network.server.SDimensionCheckPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -15,11 +17,18 @@ import java.util.Optional;
 
 public class ModPackets {
     private static final String PROTOCOL_VERSION = "1";
-    private static SimpleChannel channel;
+    private static SimpleChannel clientChannel;
+    private static SimpleChannel serverChannel;
 
     public static void init() {
-        channel = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(EnhancedPearls.MOD_ID, "channel"))
+        clientChannel = NetworkRegistry.ChannelBuilder
+                .named(new ResourceLocation(EnhancedPearls.MOD_ID, "clientchannel"))
+                .clientAcceptedVersions(PROTOCOL_VERSION::equals)
+                .serverAcceptedVersions(PROTOCOL_VERSION::equals)
+                .networkProtocolVersion(() -> PROTOCOL_VERSION)
+                .simpleChannel();
+        serverChannel = NetworkRegistry.ChannelBuilder
+                .named(new ResourceLocation(EnhancedPearls.MOD_ID, "serverchannel"))
                 .clientAcceptedVersions(PROTOCOL_VERSION::equals)
                 .serverAcceptedVersions(PROTOCOL_VERSION::equals)
                 .networkProtocolVersion(() -> PROTOCOL_VERSION)
@@ -27,28 +36,34 @@ public class ModPackets {
 
         int packetIndex = 0;
         // Whenever you add a new network packet, you have to register it here like so:
-        channel.registerMessage(packetIndex++, ClTeleportPacket.class,
+        clientChannel.registerMessage(packetIndex++, ClTeleportPacket.class,
                 ClTeleportPacket::encode, ClTeleportPacket::decode, ClTeleportPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        clientChannel.registerMessage(packetIndex++, ClDimensionCheckPacket.class,
+                ClDimensionCheckPacket::encode, ClDimensionCheckPacket::decode, ClDimensionCheckPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        serverChannel.registerMessage(packetIndex++, SDimensionCheckPacket.class,
+                SDimensionCheckPacket::encode, SDimensionCheckPacket::decode, SDimensionCheckPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
 
 
 
     public static void sendToServer(Object msg) {
-        channel.sendToServer(msg);
+        clientChannel.sendToServer(msg);
     }
 
     public static void sendToClient(Object msg, ServerPlayerEntity player) {
         if (!(player instanceof FakePlayer)) {
-            channel.send(PacketDistributor.PLAYER.with(() -> player), msg);
+            serverChannel.send(PacketDistributor.PLAYER.with(() -> player), msg);
         }
     }
 
     public static void sendToClientsTracking(Object msg, Entity entity) {
-        channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), msg);
+        serverChannel.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), msg);
     }
 
     public static void sendToClientsTrackingAndSelf(Object msg, Entity entity) {
-        channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), msg);
+        serverChannel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), msg);
     }
 }

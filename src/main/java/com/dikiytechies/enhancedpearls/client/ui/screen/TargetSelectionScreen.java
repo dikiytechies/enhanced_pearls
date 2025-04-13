@@ -4,6 +4,7 @@ import com.dikiytechies.enhancedpearls.client.ClientUtil;
 import com.dikiytechies.enhancedpearls.client.ui.widget.TeleportButton;
 import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import com.dikiytechies.enhancedpearls.network.ModPackets;
+import com.dikiytechies.enhancedpearls.network.client.ClDimensionCheckPacket;
 import com.dikiytechies.enhancedpearls.network.client.ClTeleportPacket;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
@@ -26,34 +27,25 @@ import java.util.List;
 public class TargetSelectionScreen extends Screen {
     private final PlayerEntity player;
     private final ItemStack itemStack;
+    public final List<NetworkPlayerInfo> playerList = new ArrayList<>();
     public TargetSelectionScreen(PlayerEntity player, ItemStack itemStack) {
         super(StringTextComponent.EMPTY);
         this.player = player;
         this.itemStack = itemStack;
+
     }
 
     @Override
     protected void init() {
-        /*int yMin = height / 10;
-        int yMax = height - yMin;
-        int xMin = width / 5;
-        int xMax = width - xMin;
-        int gridScale = 30; //(height + width) / 50;
-        int gridSpace = 15; //(height + width) / 40;
-        super.init();
-        for (int i = xMin; i < xMax; i += gridScale + gridSpace) {
-            for (int j = yMin; j < yMax; j += gridScale + gridSpace) {
-                this.button = this.addButton(new Button(i, j, gridScale, gridScale, new TranslationTextComponent("a"), (asa) -> {
-                }));
-            }
-        }*/
         ClientPlayNetHandler clientPlayNetHandler = this.minecraft.player.connection;
-        List<NetworkPlayerInfo> playerList = new ArrayList<>(this.minecraft.player.connection.getOnlinePlayers());
+        playerList.addAll(clientPlayNetHandler.getOnlinePlayers());
         playerList.remove(clientPlayNetHandler.getPlayerInfo(player.getUUID()));
+        playerList.forEach(networkPlayerInfo -> {
+            ModPackets.sendToServer(new ClDimensionCheckPacket(networkPlayerInfo.getProfile().getId(), player.getUUID()));
+        });
         //todo remove players from another dimension
-        initGrid(playerList);
     }
-    private void initGrid(List<NetworkPlayerInfo> players) {
+    public void initGrid(List<NetworkPlayerInfo> players) {
         int amount = players.size();
         int gridScale = 28;
         int gridSpace = 6;
