@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ClientUtil {
     public static void openTargetSelection(PlayerEntity player, ItemStack itemStack) {
-        Minecraft.getInstance().setScreen(new TargetSelectionScreen(player, itemStack));
+        Minecraft.getInstance().setScreen(TargetSelectionScreen.initInstance(player, itemStack));
     }
     //https://github.com/StandoByte/Ripples-of-the-Past/blob/1.16.5/src/main/java/com/github/standobyte/jojo/client/ClientUtil.java #369
     public static void renderPlayerFace(MatrixStack matrixStack, int x, int y, ResourceLocation playerFace) {
