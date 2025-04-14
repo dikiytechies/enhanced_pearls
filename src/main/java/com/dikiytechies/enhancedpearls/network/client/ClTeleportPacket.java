@@ -1,7 +1,6 @@
 package com.dikiytechies.enhancedpearls.network.client;
 
 import com.dikiytechies.enhancedpearls.item.EnhancedPearl;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;

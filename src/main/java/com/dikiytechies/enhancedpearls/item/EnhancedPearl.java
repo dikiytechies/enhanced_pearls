@@ -1,7 +1,9 @@
 package com.dikiytechies.enhancedpearls.item;
 
 import com.dikiytechies.enhancedpearls.client.ClientUtil;
+import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

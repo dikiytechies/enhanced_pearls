@@ -1,7 +1,9 @@
 package com.dikiytechies.enhancedpearls.network;
 
 import com.dikiytechies.enhancedpearls.EnhancedPearls;
+import com.dikiytechies.enhancedpearls.network.client.ClGridInitPacket;
 import com.dikiytechies.enhancedpearls.network.client.ClTeleportPacket;
+import com.dikiytechies.enhancedpearls.network.server.TrGridInitPacket;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -30,6 +32,13 @@ public class ModPackets {
         channel.registerMessage(packetIndex++, ClTeleportPacket.class,
                 ClTeleportPacket::encode, ClTeleportPacket::decode, ClTeleportPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
+        channel.registerMessage(packetIndex++, ClGridInitPacket.class,
+                ClGridInitPacket::encode, ClGridInitPacket::decode, ClGridInitPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_SERVER));
+
+        channel.registerMessage(packetIndex++, TrGridInitPacket.class,
+                TrGridInitPacket::encode, TrGridInitPacket::decode, TrGridInitPacket::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
 
 
