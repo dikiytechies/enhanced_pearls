@@ -1,0 +1,12 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.dikiytechies.enhancedpearls.mixin",
+  "refmap": "mixins.enhancedpearls.refmap.json",
+  "minVersion": "0.8",
+  "mixins": [
+    "EnderPearlMixin"
+  ],
+  "client": [
+
+  ]
+}
