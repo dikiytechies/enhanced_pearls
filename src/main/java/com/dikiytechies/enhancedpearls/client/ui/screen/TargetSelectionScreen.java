@@ -19,6 +19,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +40,10 @@ public class TargetSelectionScreen extends Screen {
         //}
         return getInstance();
     }
-
+    @Nullable
     public static TargetSelectionScreen getInstance() {
         return instance;
     }
-
     @Override
     protected void init() {
         ModPackets.sendToServer(new ClGridInitPacket(itemStack));
@@ -79,7 +79,6 @@ public class TargetSelectionScreen extends Screen {
         ModPackets.sendToServer(new ClTeleportPacket(players.get(j * 9 + i).getProfile().getId()));
         this.onClose();
     }
-
     @Override
     public boolean isPauseScreen() { return false; }
 }

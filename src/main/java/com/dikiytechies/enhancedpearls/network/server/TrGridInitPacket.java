@@ -6,6 +6,7 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.network.play.ClientPlayNetHandler;
 import net.minecraft.client.network.play.NetworkPlayerInfo;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -43,8 +44,11 @@ public class TrGridInitPacket {
                 ClientPlayNetHandler clientPlayNetHandler = mc.player.connection;
                     NetworkPlayerInfo player = clientPlayNetHandler.getPlayerInfo(uuid);
                     networkPlayers.add(player);
-                });
-            TargetSelectionScreen.getInstance().initGrid(networkPlayers);
+            });
+            if (!networkPlayers.isEmpty()) {
+                TargetSelectionScreen.getInstance().initGrid(networkPlayers);
+            } else TargetSelectionScreen.getInstance().onClose();
+
         });
         ctx.get().setPacketHandled(true);
     }

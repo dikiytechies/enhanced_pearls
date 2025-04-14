@@ -1,5 +1,8 @@
 {
   "item.enhanced_pearls.cracked_pearl": "Cracked Pearl",
   "item.enhanced_pearls.calibrated_pearl": "Calibrated Pearl",
+
+  "enchantment.enhanced_pearls.multidimensional": "Multidimensional",
+
   "gui.enhanced_pearls.selection_screen.title" : "Select a Player to Teleport to"
 }
