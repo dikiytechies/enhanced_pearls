@@ -6,7 +6,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -23,9 +22,8 @@ public class GameplayEventHandler {
             Iterator<ItemEntity> drops = event.getDrops().iterator();
             while (drops.hasNext()) {
                 ItemEntity item = drops.next();
-                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.RETRIEVING.get(), item.getItem()) > 0) {
+                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTAL.get(), item.getItem()) > 0) {
                     drops.remove();
-                    ((ServerPlayerEntity) event.getEntityLiving()).inventory.add(item.getItem());
                 }
             }
         }
@@ -36,7 +34,7 @@ public class GameplayEventHandler {
             PlayerEntity player = event.getOriginal();
             PlayerEntity respawned = event.getPlayer();
             for (int i = 0; i < event.getPlayer().inventory.getContainerSize(); i++) {
-                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.RETRIEVING.get(), player.inventory.getItem(i)) > 0) {
+                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTAL.get(), player.inventory.getItem(i)) > 0) {
                     respawned.inventory.setItem(i, player.inventory.getItem(i));
                 }
             }

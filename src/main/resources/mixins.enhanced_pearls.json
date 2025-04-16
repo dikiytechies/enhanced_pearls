@@ -4,9 +4,9 @@
   "refmap": "mixins.enhancedpearls.refmap.json",
   "minVersion": "0.8",
   "mixins": [
-    "EnderPearlMixin"
+    "EnderPearlMixin",
+    "PlayerInventoryMixin"
   ],
   "client": [
-
   ]
 }

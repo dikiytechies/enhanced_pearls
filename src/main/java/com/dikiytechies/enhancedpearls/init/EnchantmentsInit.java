@@ -18,6 +18,6 @@ public class EnchantmentsInit {
 
     public static final RegistryObject<Enchantment> MULTIDIMENSIONAL = ENCHANTMENTS.register("multidimensional",
             () -> new MultidimensionalEnchantment(Enchantment.Rarity.COMMON, EquipmentSlotType.MAINHAND));
-    public static final RegistryObject<Enchantment> RETRIEVING = ENCHANTMENTS.register("postmortal",
+    public static final RegistryObject<Enchantment> POSTMORTAL = ENCHANTMENTS.register("postmortal",
             () -> new PostmortalEnchantment(Enchantment.Rarity.UNCOMMON, EquipmentSlotType.MAINHAND));
 }

@@ -1,19 +1,12 @@
 package com.dikiytechies.enhancedpearls.item;
 
-import com.dikiytechies.enhancedpearls.client.ClientUtil;
-import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import com.dikiytechies.enhancedpearls.network.ModPackets;
 import com.dikiytechies.enhancedpearls.network.client.ClOpenTargetSelection;
-import com.dikiytechies.enhancedpearls.network.client.ClTeleportPacket;
-import com.dikiytechies.enhancedpearls.network.server.TrOpenTargetSelection;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;

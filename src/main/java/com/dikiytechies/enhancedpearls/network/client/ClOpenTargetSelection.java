@@ -4,13 +4,11 @@ import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import com.dikiytechies.enhancedpearls.network.ModPackets;
 import com.dikiytechies.enhancedpearls.network.server.TrOpenTargetSelection;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.ArrayList;
 import java.util.Iterator;
