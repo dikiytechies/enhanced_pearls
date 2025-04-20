@@ -1,0 +1,11 @@
+{
+  "item.enhanced_pearls.cracked_pearl": "Треснутый жемчуг",
+  "item.enhanced_pearls.calibrated_pearl": "Откалиброванный жемчуг",
+
+  "enchantment.enhanced_pearls.multidimensional": "Многомерный",
+  "enchantment.enhanced_pearls.postmortem": "Посмертный",
+
+  "gui.enhanced_pearls.selection_screen.title" : "Выберите игрока для телепортации.",
+
+  "enhanced_pearls.gui.jei.block_interaction": "Взаимодействие с окружением"
+}
