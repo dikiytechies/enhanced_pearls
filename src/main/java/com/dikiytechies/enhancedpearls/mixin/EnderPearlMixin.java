@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -37,8 +38,12 @@ public abstract class EnderPearlMixin extends Item {
                     }
                 } else {
                     world.playSound(player, blockPos, SoundEvents.END_PORTAL_FRAME_FILL, SoundCategory.BLOCKS, 1.0f, 1.0f);
-                    context.getItemInHand().shrink(1);
-                    player.inventory.add(new ItemStack(ItemsInit.CALIBRATED_PEARL.get()));
+                    if (context.getItemInHand().getCount() == 1 && context.getHand() != Hand.OFF_HAND) {
+                        player.inventory.setItem(player.inventory.selected, new ItemStack(ItemsInit.CALIBRATED_PEARL.get()));
+                    } else {
+                        context.getItemInHand().shrink(1);
+                        player.inventory.add(new ItemStack(ItemsInit.CALIBRATED_PEARL.get()));
+                    }
                 }
                 return ActionResultType.SUCCESS;
             }
