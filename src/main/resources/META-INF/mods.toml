@@ -29,7 +29,7 @@ displayName="Enhanced Pearls" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo.png" #optional
 # A text field displayed in the mod UI
-credits="StandoByte - github.com/StandoByte; MakutaZeml - github.com/MakutaZeml" #optional
+credits="StandoByte - https://github.com/StandoByte; Weever - https://github.com/Weever1337; Tilto - https://github.com/Yarost228;" #optional
 # A text field displayed in the mod UI
 authors="dikiytechies" #optional
 # The description text for the mod (multi line!) (#mandatory)
