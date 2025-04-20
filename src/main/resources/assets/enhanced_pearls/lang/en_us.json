@@ -3,7 +3,9 @@
   "item.enhanced_pearls.calibrated_pearl": "Calibrated Pearl",
 
   "enchantment.enhanced_pearls.multidimensional": "Multidimensional",
-  "enchantment.enhanced_pearls.postmortal": "Postmortal",
+  "enchantment.enhanced_pearls.postmortem": "Postmortem",
 
-  "gui.enhanced_pearls.selection_screen.title" : "Select a Player to Teleport to"
+  "gui.enhanced_pearls.selection_screen.title" : "Select a Player to Teleport to",
+
+  "enhanced_pearls.gui.jei.block_interaction": "Block Interaction"
 }

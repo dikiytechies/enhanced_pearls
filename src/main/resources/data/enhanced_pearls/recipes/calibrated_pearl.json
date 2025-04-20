@@ -1,0 +1,14 @@
+{
+  "type": "enhanced_pearls:block",
+  "ingredients": [
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "minecraft:lodestone"
+    }
+  ],
+  "result": {
+    "item": "enhanced_pearls:calibrated_pearl"
+  }
+}

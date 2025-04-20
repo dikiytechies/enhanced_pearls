@@ -2,7 +2,7 @@ package com.dikiytechies.enhancedpearls.init;
 
 import com.dikiytechies.enhancedpearls.EnhancedPearls;
 import com.dikiytechies.enhancedpearls.enchantment.MultidimensionalEnchantment;
-import com.dikiytechies.enhancedpearls.enchantment.PostmortalEnchantment;
+import com.dikiytechies.enhancedpearls.enchantment.PostmortemEnchantment;
 import com.dikiytechies.enhancedpearls.item.EnhancedPearl;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -18,6 +18,6 @@ public class EnchantmentsInit {
 
     public static final RegistryObject<Enchantment> MULTIDIMENSIONAL = ENCHANTMENTS.register("multidimensional",
             () -> new MultidimensionalEnchantment(Enchantment.Rarity.COMMON, EquipmentSlotType.MAINHAND));
-    public static final RegistryObject<Enchantment> POSTMORTAL = ENCHANTMENTS.register("postmortal",
-            () -> new PostmortalEnchantment(Enchantment.Rarity.UNCOMMON, EquipmentSlotType.MAINHAND));
+    public static final RegistryObject<Enchantment> POSTMORTEM = ENCHANTMENTS.register("postmortem",
+            () -> new PostmortemEnchantment(Enchantment.Rarity.UNCOMMON, EquipmentSlotType.MAINHAND));
 }

@@ -29,7 +29,7 @@ public abstract class PlayerInventoryMixin implements IInventory, INameable {
     @Redirect(method = "dropAll", at = @At(value = "INVOKE", target = "Ljava/util/List;set(ILjava/lang/Object;)Ljava/lang/Object;"))
     public <E> E set(List<E> instance, int i, E e) {
         Validate.notNull(e);
-        if (instance.get(i) instanceof ItemStack && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTAL.get(), ((ItemStack) instance.get(i))) > 0) {
+        if (instance.get(i) instanceof ItemStack && EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTEM.get(), ((ItemStack) instance.get(i))) > 0) {
             return instance.get(i);
         } else return instance.set(i, e);
     }

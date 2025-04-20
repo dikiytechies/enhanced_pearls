@@ -4,8 +4,8 @@ import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.EquipmentSlotType;
 
-public class PostmortalEnchantment extends Enchantment {
-    public PostmortalEnchantment(Rarity rarity, EquipmentSlotType... slots) {
+public class PostmortemEnchantment extends Enchantment {
+    public PostmortemEnchantment(Rarity rarity, EquipmentSlotType... slots) {
         super(rarity, EnchantmentsInit.PEARL, slots);
     }
 

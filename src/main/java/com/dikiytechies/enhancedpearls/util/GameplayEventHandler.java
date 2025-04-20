@@ -22,7 +22,7 @@ public class GameplayEventHandler {
             Iterator<ItemEntity> drops = event.getDrops().iterator();
             while (drops.hasNext()) {
                 ItemEntity item = drops.next();
-                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTAL.get(), item.getItem()) > 0) {
+                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTEM.get(), item.getItem()) > 0) {
                     drops.remove();
                 }
             }
@@ -34,7 +34,7 @@ public class GameplayEventHandler {
             PlayerEntity player = event.getOriginal();
             PlayerEntity respawned = event.getPlayer();
             for (int i = 0; i < event.getPlayer().inventory.getContainerSize(); i++) {
-                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTAL.get(), player.inventory.getItem(i)) > 0) {
+                if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsInit.POSTMORTEM.get(), player.inventory.getItem(i)) > 0) {
                     respawned.inventory.setItem(i, player.inventory.getItem(i));
                 }
             }

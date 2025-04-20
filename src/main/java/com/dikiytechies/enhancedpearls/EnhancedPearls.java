@@ -1,5 +1,6 @@
 package com.dikiytechies.enhancedpearls;
 
+import com.dikiytechies.enhancedpearls.data.recipes.ModRecipeTypes;
 import com.dikiytechies.enhancedpearls.init.EnchantmentsInit;
 import com.dikiytechies.enhancedpearls.init.ItemsInit;
 import com.dikiytechies.enhancedpearls.network.ModPackets;
@@ -27,5 +28,6 @@ public class EnhancedPearls
     private void vanillaRegistries(IEventBus eventBus) {
         EnchantmentsInit.ENCHANTMENTS.register(eventBus);
         ItemsInit.ITEMS.register(eventBus);
+        ModRecipeTypes.register(eventBus);
     }
 }
