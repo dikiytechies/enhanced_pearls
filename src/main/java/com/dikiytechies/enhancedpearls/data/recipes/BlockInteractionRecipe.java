@@ -84,6 +84,7 @@ public class BlockInteractionRecipe implements IBlockInteractionRecipe {
         @Override
         public BlockInteractionRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(2, Ingredient.EMPTY);
+            buf.readInt();
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromNetwork(buf));
             }
