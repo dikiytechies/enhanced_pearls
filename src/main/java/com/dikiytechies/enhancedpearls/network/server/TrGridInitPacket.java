@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
-
 public class TrGridInitPacket {
     private final List<UUID> players;
 
@@ -33,17 +32,18 @@ public class TrGridInitPacket {
     }
     public static void handle(TrGridInitPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            Minecraft mc = Minecraft.getInstance();
-            List<NetworkPlayerInfo> networkPlayers = new ArrayList<>();
-            msg.players.forEach(uuid -> {
-                ClientPlayNetHandler clientPlayNetHandler = mc.player.connection;
+            if (ctx.get().getSender().level.isClientSide()) {
+                Minecraft mc = Minecraft.getInstance();
+                List<NetworkPlayerInfo> networkPlayers = new ArrayList<>();
+                msg.players.forEach(uuid -> {
+                    ClientPlayNetHandler clientPlayNetHandler = mc.player.connection;
                     NetworkPlayerInfo player = clientPlayNetHandler.getPlayerInfo(uuid);
                     networkPlayers.add(player);
-            });
-            if (!networkPlayers.isEmpty()) {
-                TargetSelectionScreen.getInstance().initGrid(networkPlayers);
-            } else TargetSelectionScreen.getInstance().onClose();
-
+                });
+                if (!networkPlayers.isEmpty()) {
+                    TargetSelectionScreen.getInstance().initGrid(networkPlayers);
+                } else TargetSelectionScreen.getInstance().onClose();
+            }
         });
         ctx.get().setPacketHandled(true);
     }

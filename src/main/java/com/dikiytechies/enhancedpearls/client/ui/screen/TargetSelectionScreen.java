@@ -8,31 +8,25 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.network.play.NetworkPlayerInfo;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-@OnlyIn(Dist.CLIENT)
 public class TargetSelectionScreen extends Screen {
     private static TargetSelectionScreen instance = null;
-    private final PlayerEntity player;
     private final ItemStack itemStack;
-    private TargetSelectionScreen(PlayerEntity player, ItemStack itemStack) {
+    private TargetSelectionScreen(ItemStack itemStack) {
         super(StringTextComponent.EMPTY);
-        this.player = player;
         this.itemStack = itemStack;
     }
 
-    public static TargetSelectionScreen initInstance(PlayerEntity player, ItemStack stack) {
+    public static TargetSelectionScreen initInstance(ItemStack stack) {
         //if (instance == null) {
-            instance = new TargetSelectionScreen(player, stack);
+            instance = new TargetSelectionScreen(stack);
         //}
         return getInstance();
     }
@@ -59,7 +53,6 @@ public class TargetSelectionScreen extends Screen {
                 int finalI = i;
                 int finalJ = j;
                     this.addButton(new TeleportButton(xMin + i * (gridScale + gridSpace), yMin + j * (gridScale + gridSpace), gridScale, gridScale,
-                            player,
                             players.get(finalJ * 9 + finalI).getSkinLocation(),
                             (button_teleport) -> teleport(finalI, finalJ, players),
                             (Button button, MatrixStack matrixStack, int mouseX, int mouseY) -> {

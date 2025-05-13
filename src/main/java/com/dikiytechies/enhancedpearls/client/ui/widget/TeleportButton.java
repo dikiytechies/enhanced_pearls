@@ -5,23 +5,19 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 import static com.dikiytechies.enhancedpearls.client.ClientUtil.renderPlayerFace;
 
 public class TeleportButton extends Button {
-    private final PlayerEntity player;
     private final ResourceLocation targetTexture;
-    public TeleportButton(int x, int y, int width, int height, PlayerEntity player, ResourceLocation targetTexture, IPressable event, Button.ITooltip tooltip) {
+    public TeleportButton(int x, int y, int width, int height, ResourceLocation targetTexture, IPressable event, Button.ITooltip tooltip) {
         super(x, y, width, height, ITextComponent.nullToEmpty(null), event, tooltip);
-        this.player = player;
         this.targetTexture = targetTexture;
     }
-    public TeleportButton(int x, int y, int width, int height, PlayerEntity player, ResourceLocation targetTexture, IPressable event) {
+    public TeleportButton(int x, int y, int width, int height, ResourceLocation targetTexture, IPressable event) {
         super(x, y, width, height, ITextComponent.nullToEmpty(null), event);
-        this.player = player;
         this.targetTexture = targetTexture;
     }
 

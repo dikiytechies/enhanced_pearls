@@ -19,11 +19,18 @@ import java.util.Optional;
 
 public class ModPackets {
     private static final String PROTOCOL_VERSION = "1";
-    private static SimpleChannel channel;
+    private static SimpleChannel clientChannel;
+    private static SimpleChannel serverChannel;
 
     public static void init() {
-        channel = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(EnhancedPearls.MOD_ID, "channel"))
+        clientChannel = NetworkRegistry.ChannelBuilder
+                .named(new ResourceLocation(EnhancedPearls.MOD_ID, "client_channel"))
+                .clientAcceptedVersions(PROTOCOL_VERSION::equals)
+                .serverAcceptedVersions(PROTOCOL_VERSION::equals)
+                .networkProtocolVersion(() -> PROTOCOL_VERSION)
+                .simpleChannel();
+        serverChannel = NetworkRegistry.ChannelBuilder
+                .named(new ResourceLocation(EnhancedPearls.MOD_ID, "server_channel"))
                 .clientAcceptedVersions(PROTOCOL_VERSION::equals)
                 .serverAcceptedVersions(PROTOCOL_VERSION::equals)
                 .networkProtocolVersion(() -> PROTOCOL_VERSION)
@@ -31,20 +38,20 @@ public class ModPackets {
 
         int packetIndex = 0;
         // Whenever you add a new network packet, you have to register it here like so:
-        channel.registerMessage(packetIndex++, ClTeleportPacket.class,
+        clientChannel.registerMessage(packetIndex++, ClTeleportPacket.class,
                 ClTeleportPacket::encode, ClTeleportPacket::decode, ClTeleportPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
-        channel.registerMessage(packetIndex++, ClGridInitPacket.class,
+        clientChannel.registerMessage(packetIndex++, ClGridInitPacket.class,
                 ClGridInitPacket::encode, ClGridInitPacket::decode, ClGridInitPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
-        channel.registerMessage(packetIndex++, ClOpenTargetSelection.class,
+        clientChannel.registerMessage(packetIndex++, ClOpenTargetSelection.class,
                 ClOpenTargetSelection::encode, ClOpenTargetSelection::decode, ClOpenTargetSelection::handle,
                 Optional.of(NetworkDirection.PLAY_TO_SERVER));
 
-        channel.registerMessage(packetIndex++, TrGridInitPacket.class,
+        serverChannel.registerMessage(packetIndex++, TrGridInitPacket.class,
                 TrGridInitPacket::encode, TrGridInitPacket::decode, TrGridInitPacket::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
-        channel.registerMessage(packetIndex++, TrOpenTargetSelection.class,
+        serverChannel.registerMessage(packetIndex++, TrOpenTargetSelection.class,
                 TrOpenTargetSelection::encode, TrOpenTargetSelection::decode, TrOpenTargetSelection::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
     }
@@ -52,20 +59,20 @@ public class ModPackets {
 
 
     public static void sendToServer(Object msg) {
-        channel.sendToServer(msg);
+        clientChannel.sendToServer(msg);
     }
 
     public static void sendToClient(Object msg, ServerPlayerEntity player) {
         if (!(player instanceof FakePlayer)) {
-            channel.send(PacketDistributor.PLAYER.with(() -> player), msg);
+            serverChannel.send(PacketDistributor.PLAYER.with(() -> player), msg);
         }
     }
 
     public static void sendToClientsTracking(Object msg, Entity entity) {
-        channel.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), msg);
+        serverChannel.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), msg);
     }
 
     public static void sendToClientsTrackingAndSelf(Object msg, Entity entity) {
-        channel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), msg);
+        serverChannel.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), msg);
     }
 }

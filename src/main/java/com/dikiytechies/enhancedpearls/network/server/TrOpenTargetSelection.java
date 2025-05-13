@@ -1,13 +1,11 @@
 package com.dikiytechies.enhancedpearls.network.server;
 
 import com.dikiytechies.enhancedpearls.client.ClientUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
-
 public class TrOpenTargetSelection {
     private final ItemStack itemStack;
 
@@ -22,7 +20,7 @@ public class TrOpenTargetSelection {
     }
     public static void handle(TrOpenTargetSelection msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            ClientUtil.openTargetSelection(Minecraft.getInstance().player, msg.itemStack);
+            ClientUtil.openTargetSelection(msg.itemStack);
         });
         ctx.get().setPacketHandled(true);
     }
