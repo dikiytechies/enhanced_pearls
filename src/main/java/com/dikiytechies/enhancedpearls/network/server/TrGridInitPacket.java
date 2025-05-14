@@ -32,18 +32,16 @@ public class TrGridInitPacket {
     }
     public static void handle(TrGridInitPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
-            if (ctx.get().getSender().level.isClientSide()) {
-                Minecraft mc = Minecraft.getInstance();
-                List<NetworkPlayerInfo> networkPlayers = new ArrayList<>();
-                msg.players.forEach(uuid -> {
-                    ClientPlayNetHandler clientPlayNetHandler = mc.player.connection;
-                    NetworkPlayerInfo player = clientPlayNetHandler.getPlayerInfo(uuid);
-                    networkPlayers.add(player);
-                });
-                if (!networkPlayers.isEmpty()) {
-                    TargetSelectionScreen.getInstance().initGrid(networkPlayers);
-                } else TargetSelectionScreen.getInstance().onClose();
-            }
+            Minecraft mc = Minecraft.getInstance();
+            List<NetworkPlayerInfo> networkPlayers = new ArrayList<>();
+            msg.players.forEach(uuid -> {
+                ClientPlayNetHandler clientPlayNetHandler = mc.player.connection;
+                NetworkPlayerInfo player = clientPlayNetHandler.getPlayerInfo(uuid);
+                networkPlayers.add(player);
+            });
+            if (!networkPlayers.isEmpty()) {
+                TargetSelectionScreen.getInstance().initGrid(networkPlayers);
+            } else TargetSelectionScreen.getInstance().onClose();
         });
         ctx.get().setPacketHandled(true);
     }
